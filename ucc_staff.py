@@ -6,7 +6,7 @@ page = requests.get('https://www.cubsucc.com/faculty-directory/')
 
 soup = BeautifulSoup(page.text, 'html.parser')
 
-names = soup.findAll("span", attrs={"class":"name"})
+names = soup.findAll("span", attrs={"class":"name"})         
 titles = soup.findAll("span",attrs={"class":"jobTitle"})
 departments = soup.findAll("span",attrs={"class":"department"})
 
@@ -17,8 +17,8 @@ with open("UCC_name_department.csv","w",newline="") as f:
 
     for name,title,department in zip(names,titles,departments):
         
-        # looks at the "a" tag as it contains the name of the staff.
-        name_text = name.find("a").text.strip() if name.find("a") else name.text.strip()
+        # Extracts name text
+        name_text = name.a.contents[0].strip()
         # Extract title text
         title_text = title.text.strip()
         # Extract department text
